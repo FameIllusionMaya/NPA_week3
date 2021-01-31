@@ -45,7 +45,3 @@ class Router:
         print("Router : ", self.hostname)
         for att in self.interface:
             print("Neighbor : ", self.interface[att]["Connect"])
-
-    def play():
-        print("Hello")
-
