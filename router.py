@@ -1,38 +1,51 @@
-"""NPA week3 homework define python class as router"""
+"""NPA week3 homework define python class for router"""
 
 class Router:
     def __init__(self, brand, model, hostname):
         self.brand = brand
         self.model = model
         self.hostname = hostname
-        self.router_interface = {}
+        self.interface = {}
 
     def add_interface(self, interface):
-        """add only interface to router"""
-        self.router_interface[interface] = "unassign"
-        print("add interface %s Done!" %(interface))
+        """add interface to router"""
+        self.interface[interface] = {"IP" : "unassign", "Connect" : "-"}
 
     def add_interface_ip(self, interface, ip):
-        """assign ip to an interface or add interface and ip"""
-        self.router_interface[interface] = ip
-        print(self.router_interface)
+        """assign ip to an interface"""
+        self.interface[interface]["IP"] = ip
 
-    def connect_to(self):
+    def change_hostname(self, new_name):
+        """change hostname"""
+        self.hostname = new_name
+
+
+    def connect(self, interface_1, device, interface_2):
         """connect device with another in topology graph"""
+        self.interface[interface_1]["Connect"] = device.hostname + " interface : " + interface_2
+        device.interface[interface_2]["Connect"] = self.hostname + " interface : " + interface_1
 
-    # def show_interface(self):
-    # def show_neighbor(self):
+    def show(self):
+        info = self.__dict__
+        print("----- Show all configue -----")
+        for att in info:
+            print(att + " : " + str(info[att]))
 
-r1 = Router('Cisco', 'IOSv', 'R1')
-r2 = Router('Cisco', '3745', 'R2')
-r3 = Router('Juniper', 'MX5', 'R3')
+    def show_interface(self):
+        """show interface information IP and connecting"""
+        print("----- Show interface -----")
+        print("Router : ", self.hostname)
+        print("Interface amount : ", len(self.interface))
+        for att in self.interface:
+            print("Interface : ", att)
+            print("IP address : ", self.interface[att]["IP"])
 
-r1.add_interface('G0/1')
-r1.add_interface('G0/2')
-r2.add_interface('S0/2')
-r2.add_interface('S0/1')
+    def show_neighbor(self):
+        print("----- Show neighbor -----")
+        print("Router : ", self.hostname)
+        for att in self.interface:
+            print("Neighbor : ", self.interface[att]["Connect"])
 
-r1.add_interface_ip('G0/2', '192.168.1.1')
-
-    
+    def play():
+        print("Hello")
 
